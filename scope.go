@@ -1,5 +1,10 @@
 package sdk
 
+// ProjectEnvironment contains information about project environment
+type ProjectEnvironment struct {
+	ProjectDirectory string
+}
+
 // ScopeAccessor contains a set of globals and variables related to specific job
 type ScopeAccessor interface {
 
@@ -22,6 +27,9 @@ type ScopeAccessor interface {
 	//
 	// Useful for bulk mapping of struct fields
 	Scan(values ...*string) (err error)
+
+	// Environment returns information about project environment
+	Environment() ProjectEnvironment
 
 	// Environ gets list of OS environment variables with globals
 	Environ() (env []string)
