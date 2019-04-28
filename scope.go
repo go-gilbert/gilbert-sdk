@@ -1,13 +1,13 @@
 package sdk
 
-// Scope contains a set of globals and variables related to specific job
-type Scope interface {
+// ScopeAccessor contains a set of globals and variables related to specific job
+type ScopeAccessor interface {
 
 	// AppendVariables appends local variables to the context
-	AppendVariables(vars Vars) Scope
+	AppendVariables(vars Vars) ScopeAccessor
 
 	// AppendGlobals appends global variables to the context
-	AppendGlobals(vars Vars) Scope
+	AppendGlobals(vars Vars) ScopeAccessor
 
 	// Global returns a global variable value by it's name
 	Global(varName string) (out string, ok bool)

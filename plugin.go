@@ -10,7 +10,7 @@ import (
 type PluginParams map[string]interface{}
 
 // PluginFactory is plugin constructor
-type PluginFactory func(Scope, PluginParams, Logger) (Plugin, error)
+type PluginFactory func(ScopeAccessor, PluginParams, Logger) (Plugin, error)
 
 // Plugin represents Gilbert's plugin
 type Plugin interface {
