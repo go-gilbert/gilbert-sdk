@@ -34,6 +34,8 @@ type JobRunner interface {
 
 // JobContextAccessor provides access to job run context used store job state and communicate between task runner and job
 type JobContextAccessor interface {
+	// Log provides logger for current job context
+	Log() Logger
 
 	// IsAlive checks if context was not finished
 	IsAlive() bool
