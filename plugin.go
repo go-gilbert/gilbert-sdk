@@ -6,8 +6,11 @@ import (
 	"time"
 )
 
-// PluginParams is raw plugin params
-type PluginParams map[string]interface{}
+// PluginParams is plugin params container
+type PluginParams interface {
+	// Unmarshal extracts plugin params into provided structure
+	Unmarshal(destPtr interface{}) error
+}
 
 // PluginFactory is plugin constructor
 type PluginFactory func(ScopeAccessor, PluginParams, Logger) (Plugin, error)
