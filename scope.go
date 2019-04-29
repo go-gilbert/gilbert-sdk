@@ -21,7 +21,7 @@ type ScopeAccessor interface {
 	Var(varName string) (isLocal bool, out string, ok bool)
 
 	// Variables returns all declared local variables
-	Variables() Vars
+	Vars() Vars
 
 	// ExpandVariables expands an expression stored inside a passed string
 	ExpandVariables(expression string) (string, error)
