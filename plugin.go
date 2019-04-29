@@ -2,14 +2,22 @@ package sdk
 
 import (
 	"context"
+	"fmt"
+	"github.com/mitchellh/mapstructure"
 	"sync"
 	"time"
 )
 
 // PluginParams is plugin params container
-type PluginParams interface {
-	// Unmarshal extracts plugin params into provided structure
-	Unmarshal(destPtr interface{}) error
+type PluginParams map[string]interface{}
+
+// Unmarshal extracts plugin params into provided structure
+func (p PluginParams) Unmarshal(dest interface{}) error {
+	if err := mapstructure.Decode(p, dest); err != nil {
+		return fmt.Errorf("failed to unmarshal plugin params, %s", err)
+	}
+
+	return nil
 }
 
 // PluginFactory is plugin constructor
