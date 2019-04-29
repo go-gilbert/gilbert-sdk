@@ -46,6 +46,9 @@ type JobContextAccessor interface {
 	// Context returns Go context instance assigned to the current job context
 	Context() context.Context
 
+	// Errors returns job errors channel
+	Errors() chan error
+
 	// SetWaitGroup sets wait group instance for current job
 	//
 	// This value will be used later to call wg.Done() when job was finished.
