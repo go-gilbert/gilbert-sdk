@@ -59,7 +59,7 @@ type Job struct {
 	Vars Vars `yaml:"vars,omitempty" mapstructure:"vars"`
 
 	// Params is a set of arguments for the job.
-	Params PluginParams `yaml:"params,omitempty" mapstructure:"params"`
+	Params ActionParams `yaml:"params,omitempty" mapstructure:"params"`
 }
 
 // HasDescription checks if description is available
