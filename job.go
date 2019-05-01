@@ -11,11 +11,8 @@ const (
 	// ExecEmpty means job has no execution type
 	ExecEmpty JobExecType = iota
 
-	// ExecPlugin means that job execute plugin
-	ExecPlugin
-
-	// ExecTask means that job runs other task
-	ExecTask
+	// ExecAction means that job execute plugin
+	ExecAction
 
 	// ExecMixin means that job based on mixin
 	ExecMixin
@@ -40,10 +37,12 @@ type Job struct {
 	// TaskName refers to task that should be run.
 	TaskName string `yaml:"run,omitempty" mapstructure:"run"`
 
-	// PluginName describes what plugin should handle this job.
-	PluginName string `yaml:"plugin,omitempty" mapstructure:"plugin"`
+	// ActionName is action to run.
+	ActionName string `yaml:"action,omitempty" mapstructure:"plugin"`
 
-	// MixinName is mixin to be used by this job
+	// MixinName is mixin to run.
+	//
+	// Cannot present with ActionName at the same time
 	MixinName string `yaml:"mixin,omitempty" mapstructure:"mixin"`
 
 	// Async means that job should be run asynchronously
@@ -74,7 +73,7 @@ func (j *Job) FormatDescription() string {
 	}
 
 	// If description is empty, return used mixin or plugin name if available
-	for _, v := range []string{j.PluginName, j.TaskName, j.MixinName} {
+	for _, v := range []string{j.ActionName, j.TaskName, j.MixinName} {
 		if v != "" {
 			return v
 		}
@@ -87,12 +86,8 @@ func (j *Job) FormatDescription() string {
 //
 // If job has no 'plugin', 'task' or 'plugin' declaration, ExecEmpty will be returned
 func (j *Job) Type() JobExecType {
-	if j.PluginName != "" {
-		return ExecPlugin
-	}
-
-	if j.TaskName != "" {
-		return ExecTask
+	if j.ActionName != "" {
+		return ExecAction
 	}
 
 	if j.MixinName != "" {
