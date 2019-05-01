@@ -11,7 +11,7 @@ import (
 // Actions is actions map
 //
 // Key is an action name and value is action constructor
-type Actions map[string]ActionFactory
+type Actions map[string]HandlerFactory
 
 // ActionParams is plugin params container
 type ActionParams map[string]interface{}
@@ -25,8 +25,8 @@ func (p ActionParams) Unmarshal(dest interface{}) error {
 	return nil
 }
 
-// ActionFactory is action handler constructor
-type ActionFactory func(ScopeAccessor, ActionParams) (ActionHandler, error)
+// HandlerFactory is action handler constructor
+type HandlerFactory func(ScopeAccessor, ActionParams) (ActionHandler, error)
 
 // ActionHandler represents Gilbert's action handler
 type ActionHandler interface {
@@ -40,7 +40,7 @@ type ActionHandler interface {
 // JobRunner is the the interface that represents a current job caller.
 type JobRunner interface {
 	// ActionByName returns action handler constructor
-	ActionByName(actionName string) (p ActionFactory, err error)
+	ActionByName(actionName string) (p HandlerFactory, err error)
 
 	// RunJob starts job in separate goroutine.
 	//
