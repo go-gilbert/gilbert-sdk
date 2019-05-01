@@ -8,6 +8,11 @@ import (
 	"time"
 )
 
+// Actions is actions map
+//
+// Key is an action name and value is action constructor
+type Actions map[string]ActionFactory
+
 // ActionParams is plugin params container
 type ActionParams map[string]interface{}
 
