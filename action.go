@@ -26,7 +26,7 @@ func (p ActionParams) Unmarshal(dest interface{}) error {
 }
 
 // ActionFactory is action handler constructor
-type ActionFactory func(ScopeAccessor, ActionParams, Logger) (ActionHandler, error)
+type ActionFactory func(ScopeAccessor, ActionParams) (ActionHandler, error)
 
 // ActionHandler represents Gilbert's action handler
 type ActionHandler interface {
