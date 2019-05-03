@@ -13,13 +13,13 @@ import (
 // Key is an action name and value is action constructor
 type Actions map[string]HandlerFactory
 
-// ActionParams is plugin params container
+// ActionParams is action params container
 type ActionParams map[string]interface{}
 
-// Unmarshal extracts plugin params into provided structure
+// Unmarshal extracts action params into provided structure
 func (p ActionParams) Unmarshal(dest interface{}) error {
 	if err := mapstructure.Decode(p, dest); err != nil {
-		return fmt.Errorf("failed to unmarshal plugin params, %s", err)
+		return fmt.Errorf("failed to unmarshal action params, %s", err)
 	}
 
 	return nil
@@ -30,10 +30,10 @@ type HandlerFactory func(ScopeAccessor, ActionParams) (ActionHandler, error)
 
 // ActionHandler represents Gilbert's action handler
 type ActionHandler interface {
-	// Call calls a plugin
+	// Call calls an action handler
 	Call(JobContextAccessor, JobRunner) error
 
-	// Cancel stops plugin execution
+	// Cancel aborts action handler execution
 	Cancel(JobContextAccessor) error
 }
 

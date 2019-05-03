@@ -11,7 +11,7 @@ const (
 	// ExecEmpty means job has no execution type
 	ExecEmpty JobExecType = iota
 
-	// ExecAction means that job execute plugin
+	// ExecAction means that job execute action
 	ExecAction
 
 	// ExecMixin means that job based on mixin
@@ -38,7 +38,7 @@ type Job struct {
 	TaskName string `yaml:"run,omitempty" mapstructure:"run"`
 
 	// ActionName is action to run.
-	ActionName string `yaml:"action,omitempty" mapstructure:"plugin"`
+	ActionName string `yaml:"action,omitempty" mapstructure:"action"`
 
 	// MixinName is mixin to run.
 	//
@@ -72,7 +72,7 @@ func (j *Job) FormatDescription() string {
 		return j.Description
 	}
 
-	// If description is empty, return used mixin or plugin name if available
+	// If description is empty, return used mixin or action name if available
 	for _, v := range []string{j.ActionName, j.TaskName, j.MixinName} {
 		if v != "" {
 			return v
@@ -84,7 +84,7 @@ func (j *Job) FormatDescription() string {
 
 // Type returns job execution type
 //
-// If job has no 'plugin', 'task' or 'plugin' declaration, ExecEmpty will be returned
+// If job has no 'action' or 'mixin' declaration, ExecEmpty will be returned
 func (j *Job) Type() JobExecType {
 	if j.ActionName != "" {
 		return ExecAction
