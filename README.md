@@ -7,10 +7,10 @@ SDK for plugins
 
 ## Documentation
 
-* [Tutorial](https://go-gilbert.github.io/gilbert/docs/custom-plugins)
+* [Tutorial](https://go-gilbert.github.io/gilbert/docs/plugin-development/)
 * [Reference](https://godoc.org/github.com/go-gilbert/gilbert-sdk)
 
 ## Examples
 
 * [Hello World Plugin](https://github.com/go-gilbert/gilbert-plugin-example)
-* [Built-in Plugins](https://github.com/go-gilbert/gilbert/tree/master/plugins/builtin)
+* [Built-in Actions](https://github.com/go-gilbert/gilbert/tree/master/actions)
