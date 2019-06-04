@@ -16,6 +16,9 @@ const (
 
 	// ExecMixin means that job based on mixin
 	ExecMixin
+
+	// ExecTask means that job should execute another task
+	ExecTask
 )
 
 // Period is job period in milliseconds
@@ -26,7 +29,7 @@ func (d Period) ToDuration() time.Duration {
 	return time.Duration(d) * time.Millisecond
 }
 
-// Job is a single job in task
+// Job represents a single step in task
 type Job struct {
 	// Condition is shell command that should be successful to run specified job
 	Condition string `yaml:"if,omitempty" mapstructure:"if"`
@@ -35,7 +38,7 @@ type Job struct {
 	Description string `yaml:"description,omitempty" mapstructure:"description"`
 
 	// TaskName refers to task that should be run.
-	TaskName string `yaml:"run,omitempty" mapstructure:"run"`
+	TaskName string `yaml:"task,omitempty" mapstructure:"run"`
 
 	// ActionName is action to run.
 	ActionName string `yaml:"action,omitempty" mapstructure:"action"`
@@ -84,7 +87,7 @@ func (j *Job) FormatDescription() string {
 
 // Type returns job execution type
 //
-// If job has no 'action' or 'mixin' declaration, ExecEmpty will be returned
+// If job has no 'action', 'task' or 'mixin' declaration, ExecEmpty will be returned
 func (j *Job) Type() JobExecType {
 	if j.ActionName != "" {
 		return ExecAction
@@ -92,6 +95,10 @@ func (j *Job) Type() JobExecType {
 
 	if j.MixinName != "" {
 		return ExecMixin
+	}
+
+	if j.TaskName != "" {
+		return ExecTask
 	}
 
 	return ExecEmpty
