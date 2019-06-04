@@ -48,8 +48,6 @@ type JobRunner interface {
 	RunJob(j Job, ctx JobContextAccessor)
 
 	// RunTask runs task by name
-	//
-	// Use ctx.Errors() to track job result and ctx.Cancel() to cancel job execution.
 	RunTask(taskName string, ctx JobContextAccessor, scope ScopeAccessor) error
 }
 
