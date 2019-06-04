@@ -44,8 +44,13 @@ type JobRunner interface {
 
 	// RunJob starts job in separate goroutine.
 	//
-	// Use ctx.Error channel to track job result and ctx.Cancel() to cancel it.
+	// Use ctx.Errors() to track job result and ctx.Cancel() to cancel job execution.
 	RunJob(j Job, ctx JobContextAccessor)
+
+	// RunTask runs task by name
+	//
+	// Use ctx.Errors() to track job result and ctx.Cancel() to cancel job execution.
+	RunTask(taskName string, ctx JobContextAccessor) error
 }
 
 // JobContextAccessor provides access to job run context used store job state and communicate between task runner and job
@@ -62,8 +67,17 @@ type JobContextAccessor interface {
 	// Context returns Go context instance assigned to the current job context
 	Context() context.Context
 
-	// Errors returns job errors channel
+	// Errors returns channel with job execution result
 	Errors() chan error
+
+	// SetErrorChannel sets custom error report channel
+	SetErrorChannel(chan error)
+
+	// Vars returns a set of variables attached to this context
+	Vars() Vars
+
+	// SetVars sets context variables
+	SetVars(Vars)
 
 	// SetWaitGroup sets wait group instance for current job
 	//
@@ -87,6 +101,6 @@ type JobContextAccessor interface {
 	// Result reports job result and finished the context
 	Result(err error)
 
-	// Cancel cancels the context and stops all jobs used by this context
+	// Cancel cancels the context and stops all jobs related to the context
 	Cancel()
 }
